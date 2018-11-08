@@ -12,26 +12,27 @@ knitr::opts_chunk$set(echo = FALSE)
 knitr::opts_chunk$set(cache = TRUE)
 ```
 
-# Tworzenie dokumentów w R
+# Tworzenie dokumentów
 
-## Opcje
+## Opcje w **R**
 
 > - R Notebook
 > - (R)Markdown
-> - Bookdown
-> - Blogdown
+> - **bookdown**
+> - **blogdown**
 
 ## Dlaczego?
 
-> - niesamowita szybkość pisania
-> - spora liczba dostępnych szablonów 
-> - wględna łatwość customizacji
-> - możliwość edycji plików nawet na smartphonie
-> - nie trzeba wychodzić z RStudio
+> - niesamowita szybkość pisania,
+> - spora liczba dostępnych szablonów, 
+> - wględna łatwość customizacji,
+> - możliwość edycji plików nawet na smartphonie,
+> - bezproblemowa współpraca z *git'em*,
+> - nie trzeba wychodzić z **RStudio**.
 
 # Alternatywy
 
-## A czy nie lepiej w Word'zie? {.emphasized .build}
+## A czy nie lepiej w *Word'zie*? {.emphasized .build}
 
 NIE.
 
@@ -41,22 +42,54 @@ Pliki tworzone w edytorach są nieprzenośne. Formatowanie "rozjeżdża się", p
 
 Zagnieżdżanie obiektów (tabel, zdjęć, etc.) i dopasowywanie ich do rozmiaru strony jest zadaniem karkołomnym.
 
-Eksport do *pdf* potrafi skutkować błędną strukturą dokumentu (przez co nie spełnia on norm WCAG 2.0)
+Eksport do *pdf* potrafi skutkować błędną strukturą dokumentu (przez co nie spełnia on norm WCAG 2.0).
 
 ---
 
 Uczciwość wymaga przyznać, że w edytorach typu WYSIWYG zdecydowanie prościej tworzy się tabele o skąplikowanych formach (łączone komórki, koloryzowane, pola do wyboru).
 
-## To może InDesign/Scribus?
+## To może *InDesign*/*Scribus*?
 
-InDesign faktycznie jest potężnym narzędziem, rownież jego cena jest potężna. Jest to genialne narzędzie do tworzenia dokumentów (np. plakatów, broszur) w których pierwszą rolę gra efekt wizualny. Scribus jest całkiem niezłym odpowiednikiem freeware'owym, natomiast jest toporny w obsłudze.
+*InDesign* faktycznie jest potężnym narzędziem, rownież jego cena jest potężna. Jest to genialne narzędzie do tworzenia dokumentów (np. plakatów, broszur) w których pierwszą rolę gra efekt wizualny. *Scribus* jest całkiem niezłym odpowiednikiem freeware'owym, natomiast jest toporny w obsłudze.
 
-## Czysty LaTeX? HTML?
+## Czysty *LaTeX*? *HTML*?
 
-Można.
+Zarówno *LaTeX* i *HTML* to świetne narzędzia, oferujące praktycznie nieskończone możliwości obróbki dokumentów. I w zasadzie pliki *Rmd* najczęściej będą kompilowane do tych formatów.
+
+W przeciwieństwie do czystego *LaTeX'u* czy *HTML'a*, Markdown oferuje bardzo uproszczoną składnię, która nie odstrasza początkujących użytkowników i daje nam możliwość integracji **R** -- np. wykresów, importu tabel, obliczeń, wprost do dokumentu. 
+
+Korzystając z gotowych formatek w zasadzie nie trzeba mieć żadnej wiedzy na temat *LaTeX'u* czy *HTML'a*, żeby stworzyć dokument w formie webowej albo *pdf*, które będą wyglądały schludnie.
+
+# Praca z **bookdown**
+
+## Różnice między **bookdown** a **RMarkdown**
+
+## Tworzenie szablonów
+
+## Tricky parts | tabele
+
+## Tricky parts | abstrakt
+
+## Tricky parts | cytacje
+
+# Grand Final
 
 # Źródła
 
 ##
 
-Prezentacja: [www.github.com/mczyzj/PazuR_bookdown](https://www.github.com/mczyzj/PazuR_bookdown)
+Prezentacja:
+
+[https://www.github.com/mczyzj/PazuR_bookdown](https://www.github.com/mczyzj/PazuR_bookdown)
+
+Formatki Pest Risk Assessment w bookdown:
+
+[https://www.github.com/mczyzj/pestrPRA](https://www.github.com/mczyzj/pestrPRA)
+
+Przykłady dokumentów z wykorzystaniem powyższych formatek:
+
+[https://www.github.com/mczyzj/pestrPRA_examples](https://www.github.com/mczyzj/pestrPRA_examples)
+
+Oryginalne dokumenty:
+
+[https://bit.ly/2OxVpCA](https://bit.ly/2OxVpCA)
