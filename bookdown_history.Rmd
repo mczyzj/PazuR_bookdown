@@ -1,0 +1,62 @@
+---
+title: "Proste rzeczy są trudne, słów kilka o tworzeniu szablonów w bookdown"
+author: "Michal J. Czyz"
+date: "November 8, 2018"
+output:
+  ioslides_presentation:
+    css: styles.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(cache = TRUE)
+```
+
+# Tworzenie dokumentów w R
+
+## Opcje
+
+> - R Notebook
+> - (R)Markdown
+> - Bookdown
+> - Blogdown
+
+## Dlaczego?
+
+> - niesamowita szybkość pisania
+> - spora liczba dostępnych szablonów 
+> - wględna łatwość customizacji
+> - możliwość edycji plików nawet na smartphonie
+> - nie trzeba wychodzić z RStudio
+
+# Alternatywy
+
+## A czy nie lepiej w Word'zie? {.emphasized .build}
+
+NIE.
+
+---
+
+Pliki tworzone w edytorach są nieprzenośne. Formatowanie "rozjeżdża się", przy próbie edycji pod różnymi wersjami edytora lub systemu operacyjnego.
+
+Zagnieżdżanie obiektów (tabel, zdjęć, etc.) i dopasowywanie ich do rozmiaru strony jest zadaniem karkołomnym.
+
+Eksport do *pdf* potrafi skutkować błędną strukturą dokumentu (przez co nie spełnia on norm WCAG 2.0)
+
+---
+
+Uczciwość wymaga przyznać, że w edytorach typu WYSIWYG zdecydowanie prościej tworzy się tabele o skąplikowanych formach (łączone komórki, koloryzowane, pola do wyboru).
+
+## To może InDesign/Scribus?
+
+InDesign faktycznie jest potężnym narzędziem, rownież jego cena jest potężna. Jest to genialne narzędzie do tworzenia dokumentów (np. plakatów, broszur) w których pierwszą rolę gra efekt wizualny. Scribus jest całkiem niezłym odpowiednikiem freeware'owym, natomiast jest toporny w obsłudze.
+
+## Czysty LaTeX? HTML?
+
+Można.
+
+# Źródła
+
+##
+
+Prezentacja: [www.github.com/mczyzj/PazuR_bookdown](https://www.github.com/mczyzj/PazuR_bookdown)
