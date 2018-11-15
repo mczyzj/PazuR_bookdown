@@ -64,7 +64,15 @@ Korzystając z gotowych formatek w zasadzie nie trzeba mieć żadnej wiedzy na t
 
 ## Różnice między **bookdown** a **RMarkdown**
 
+**RMarkdown** jest rozszerzeniem składni **Markdown** -- zbioru znaczników umożliwiających szybkie i wygodne formatowanie i tworzenie tekstów.
+
+**bookdown** jest w zasadzie *nakładką* na **RMarkdown**, umożliwiającą przede wszystkim tworzenie dokumentow/książek składających się z wielu podstron *HTML* oraz umożliwiających tworzenie odnośników do tabel, równań etc. pomiędzy tymi podstronami. Pakiet ten wspiera również prace na wielu plikach *Rmd* będących w gruncie rzeczy *rozdziałami*, oraz tworzenie wielu formatów wyjściowych na raz.
+
 ## Tworzenie szablonów
+
+Najprościej skopiować gotowe szablony formatów, które nas interesują z katalogu pakietu i stopniowo wprowadzać do nich pożadane zmiany.
+
+*opcja hard-core*: nie ma przeszkód w napisaniu szablonu pliku (np. *HTML* czy *tex*) od podstaw, ale wymaga to bardzo dużego nakładu pracy i odpowiednich umiejętności.
 
 ## Tricky parts | tabele
 
