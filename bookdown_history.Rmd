@@ -10,6 +10,7 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 knitr::opts_chunk$set(cache = TRUE)
+library('dplyr')
 ```
 
 # Tworzenie dokumentów
@@ -56,33 +57,129 @@ Uczciwość wymaga przyznać, że w edytorach typu WYSIWYG zdecydowanie proście
 
 Zarówno *LaTeX* i *HTML* to świetne narzędzia, oferujące praktycznie nieskończone możliwości obróbki dokumentów. I w zasadzie pliki *Rmd* najczęściej będą kompilowane do tych formatów.
 
-W przeciwieństwie do czystego *LaTeX'u* czy *HTML'a*, Markdown oferuje bardzo uproszczoną składnię, która nie odstrasza początkujących użytkowników i daje nam możliwość integracji **R** -- np. wykresów, importu tabel, obliczeń, wprost do dokumentu. 
+W przeciwieństwie do czystego *LaTeX'a* czy *HTML'a*, (R)Markdown oferuje bardzo uproszczoną składnię, która nie odstrasza początkujących użytkowników i daje nam możliwość integracji **R** -- np. wykresów, importu tabel, obliczeń, wprost do dokumentu. 
 
-Korzystając z gotowych formatek w zasadzie nie trzeba mieć żadnej wiedzy na temat *LaTeX'u* czy *HTML'a*, żeby stworzyć dokument w formie webowej albo *pdf*, które będą wyglądały schludnie.
+Korzystając z gotowych formatek w zasadzie nie trzeba mieć żadnej wiedzy na temat *LaTeX'a* czy *HTML'a*, żeby stworzyć dokument w formie webowej albo *pdf*, które będą wyglądały schludnie.
 
 # Praca z **bookdown**
 
-## Różnice między **bookdown** a **RMarkdown**
+## Różnice między | **RMarkdown** ...
 
-**RMarkdown** jest rozszerzeniem składni **Markdown** -- zbioru znaczników umożliwiających szybkie i wygodne formatowanie i tworzenie tekstów.
+* rozszerzenie składni **Markdown** -- zbioru znaczników umożliwiających szybkie i wygodne formatowanie i tworzenie tekstów.
 
-**bookdown** jest w zasadzie *nakładką* na **RMarkdown**, umożliwiającą przede wszystkim tworzenie dokumentow/książek składających się z wielu podstron *HTML* oraz umożliwiających tworzenie odnośników do tabel, równań etc. pomiędzy tymi podstronami. Pakiet ten wspiera również prace na wielu plikach *Rmd* będących w gruncie rzeczy *rozdziałami*, oraz tworzenie wielu formatów wyjściowych na raz.
+## a **bookdown**
+
+* *nakładka* na **RMarkdown**,
+* tworzenie dokumentow/książek składających się z wielu podstron *HTML*,
+* tworzenie odnośników do tabel, równań etc. pomiędzy podstronami,
+* wsparcie dla pracy na wielu plikach *Rmd* będących w gruncie rzeczy *rozdziałami*,
+* możliwość tworzenie wielu formatów wyjściowych na raz.
 
 ## Tworzenie szablonów
 
 Najprościej skopiować gotowe szablony formatów, które nas interesują z katalogu pakietu i stopniowo wprowadzać do nich pożadane zmiany.
 
-*opcja hard-core*: nie ma przeszkód w napisaniu szablonu pliku (np. *HTML* czy *tex*) od podstaw, ale wymaga to bardzo dużego nakładu pracy i odpowiednich umiejętności.
+*opcja hard-core*: nie ma przeszkód w napisaniu szablonu pliku (np. *html* czy *tex*) od podstaw, ale wymaga to bardzo dużego nakładu pracy i odpowiednich umiejętności.
 
-## Tricky parts | tabele
+## Jak napisać tę funkcję?
+
+```{r eval = F, echo = T}
+#' @encoding UTF-8
+#'
+#' @inheritParams rmarkdown::pdf_document
+#' @param ... Additional function arguments to pass to the
+#'        base R Markdown pdf output formatter
+#' @rdname eppoPRA
+#' @export
+
+###<b>
+
+eppo_invasive_pdf <- function(toc = F, highlight = "default", ...){
+
+  expressPRA <- bookdown::pdf_document2(template = 'template.tex',
+                                        toc = toc,
+                                        highlight = highlight, ...)
+
+  expressPRA
+
+###</b>  
+  
+}
+```
+
+---
+
+Po zainstalowaniu paczki, należy wybrać `File > New File > R Markdown`. W lewym oknie zaznaczamy `From template`, następnie z listy wyboru wybieramy interesujący nas szablon i nadajemy nazwę pliku w odpowiednim okienku.
+
+---
+
+W katalogu projektu zostanie utworzony Sub-katalog zawierający wszystkie potrzebne pliki. Żeby można było formatkę skąpilować trzeba jednak zmienić 2 rzeczy.
+
+---
+
+- Zmieniamy nazwę pliku, który ma nazwę identyczną z nazwą katalogu na `index.Rmd`
+- `Tools > Project options > Build Tools` tutaj należy zmienić pola:
+  i) `Project build tools` wybieramy website
+  ii) `Site directory` wybieramy nazwę katalogu z plikami szablonu
+  iii) `Book output format(s)` wybieramy interesujące nas formaty
+
+## Tricky parts | Tworzenie tabel w (R)Markdown
+
+* Czysty Markdown:
+
+```{r eval = F, echo = T}
+| Right | Left | Default | Center |
+|------:|:-----|---------|:------:|
+| 12 | 12 | 12 | 12 |
+| 123 | 123 | 123 | 123 |
+```
+
+| Right | Left | Default | Center |
+|------:|:-----|---------|:------:|
+| 12 | 12 | 12 | 12 |
+| 123 | 123 | 123 | 123 |
+
+---
+
+* `knitr::kable()`
+
+```{r echo = T, eval = T}
+df <- data.frame(x = c(1, 2), y = c(3, 4))
+knitr::kable(df)
+```
+
+---
+
+* `knitr::kable()` %>% kableExtra()
+
+```{r echo = T, eval = T}
+library(kableExtra)
+knitr::kable(df, col.names = c('Col1', 'Col2')) %>%
+  kable_styling(full_width = T,
+                bootstrap_options = c('striped', 'condensed', 'bordered')) %>%
+  row_spec(row = 0, bold = T, background = '#f5f6fa') %>%
+  row_spec(row = 2, bold = F, background = '#15b0f2', align = "left") %>%
+  column_spec(2, width = '20em', color = 'salmon')
+```
+
+---
+
+Niby nic trudnego, ale:
+
+* `kableExtra` posiada kilka różnic dla *html* i *pdf*, więc przy dużej ilości formatowania tabel, trzeba się posiłkować 
+`if (knitr::is_html_output()) {wersja html} else {wersja pdf}`,
+* użycie tagu `@cytacja` w tabelach nie jest takie proste jakby się mogło wydawać (o tym za chwilę),
+* jeśli nie korzystamy z *default'owych* szablonów, `kableExtra` wymaga edycji pliku `preamble.tex` do poprawnego działania.
 
 ## Tricky parts | abstrakt
 
+
+
 ## Tricky parts | cytacje
 
-# Grand Final
 
-# Źródła
+
+# Grand Final | AKA Źródła
 
 ##
 
@@ -90,14 +187,10 @@ Prezentacja:
 
 [https://www.github.com/mczyzj/PazuR_bookdown](https://www.github.com/mczyzj/PazuR_bookdown)
 
-Formatki Pest Risk Assessment w bookdown:
+[Formatki Pest Risk Assessment w bookdown](https://www.github.com/mczyzj/pestrPRA)
 
-[https://www.github.com/mczyzj/pestrPRA](https://www.github.com/mczyzj/pestrPRA)
+[Przykłady dokumentów z wykorzystaniem powyższych formatek](https://www.github.com/mczyzj/pestrPRA_examples)
 
-Przykłady dokumentów z wykorzystaniem powyższych formatek:
+[Oryginalne dokumenty](https://bit.ly/2OxVpCA)
 
-[https://www.github.com/mczyzj/pestrPRA_examples](https://www.github.com/mczyzj/pestrPRA_examples)
-
-Oryginalne dokumenty:
-
-[https://bit.ly/2OxVpCA](https://bit.ly/2OxVpCA)
+[Paczka pestrPRA](https://github.com/mczyzj/pestrPRA)
