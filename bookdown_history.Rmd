@@ -35,6 +35,28 @@ Jak wykorzystać **R** żeby zautomatyzować pisanie raportów?
 > - bezproblemowa współpraca z *git'em*,
 > - nie trzeba wychodzić z **RStudio**.
 
+## Struktura dokumentu
+
+Nagłówek **YAML**:
+
+```{haskell echo = T, eval = F}
+title: "Pest Risk Analysis"
+author: "John Snow"
+output:
+  bookdown::pdf_document2:
+    template: template.tex
+```
+
+Tekst właściwy z tagami **RMarkdown**:
+
+```
+# Chapter one
+Lorem *ipsum* @cyceron2012. **Example of bold text**
+
+## Sub-chapter
+Some other text with inline `code`.
+```
+
 # Alternatywy
 
 ## A czy nie lepiej w *Word'zie*? {.emphasized .build .flexbox .vcenter}
