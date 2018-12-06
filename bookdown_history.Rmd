@@ -5,6 +5,7 @@ date: "November 8, 2018"
 output:
   ioslides_presentation:
     css: styles.css
+    logo: panda.png
 ---
 
 ```{r setup, include=FALSE}
@@ -12,8 +13,11 @@ knitr::opts_chunk$set(echo = FALSE)
 knitr::opts_chunk$set(cache = TRUE)
 library('dplyr')
 ```
+# Szablon PRA 
 
-# Tworzenie dokumentów
+## {.bigger .flexbox .vcenter}
+
+Jak wykorzystać **R** żeby zautomatyzować pisanie raportów?
 
 ## Opcje w **R**
 
@@ -33,11 +37,13 @@ library('dplyr')
 
 # Alternatywy
 
-## A czy nie lepiej w *Word'zie*? {.emphasized .build}
+## A czy nie lepiej w *Word'zie*? {.emphasized .build .flexbox .vcenter}
 
+<div class="centered">
 NIE.
+</div>
 
----
+## Podstawowe wady
 
 Pliki tworzone w edytorach są nieprzenośne. Formatowanie "rozjeżdża się", przy próbie edycji pod różnymi wersjami edytora lub systemu operacyjnego.
 
@@ -47,7 +53,9 @@ Eksport do *pdf* potrafi skutkować błędną strukturą dokumentu (przez co nie
 
 ---
 
-Uczciwość wymaga przyznać, że w edytorach typu WYSIWYG zdecydowanie prościej tworzy się tabele o skąplikowanych formach (łączone komórki, koloryzowane, pola do wyboru).
+Uczciwość wymaga przyznać, że w edytorach typu WYSIWYG zdecydowanie prościej tworzy się tabele o skomplikowanych formach (łączone komórki, koloryzowane, pola do wyboru).
+
+![](wysiwyg.png)
 
 ## To może *InDesign*/*Scribus*?
 
@@ -67,7 +75,7 @@ Korzystając z gotowych formatek w zasadzie nie trzeba mieć żadnej wiedzy na t
 
 * rozszerzenie składni **Markdown** -- zbioru znaczników umożliwiających szybkie i wygodne formatowanie i tworzenie tekstów.
 
-## a **bookdown**
+## | a **bookdown**
 
 * *nakładka* na **RMarkdown**,
 * tworzenie dokumentow/książek składających się z wielu podstron *HTML*,
@@ -79,7 +87,7 @@ Korzystając z gotowych formatek w zasadzie nie trzeba mieć żadnej wiedzy na t
 
 Najprościej skopiować gotowe szablony formatów, które nas interesują z katalogu pakietu i stopniowo wprowadzać do nich pożadane zmiany.
 
-*opcja hard-core*: nie ma przeszkód w napisaniu szablonu pliku (np. *html* czy *tex*) od podstaw, ale wymaga to bardzo dużego nakładu pracy i odpowiednich umiejętności.
+*Opcja hard-core*: nie ma przeszkód w napisaniu szablonu pliku (np. *html* czy *tex*) od podstaw, ale wymaga to bardzo dużego nakładu pracy i odpowiednich umiejętności.
 
 ## Jak napisać tę funkcję?
 
@@ -109,13 +117,20 @@ eppo_invasive_pdf <- function(toc = F, highlight = "default", ...){
 
 ---
 
-Po zainstalowaniu paczki, należy wybrać `File > New File > R Markdown`. W lewym oknie zaznaczamy `From template`, następnie z listy wyboru wybieramy interesujący nas szablon i nadajemy nazwę pliku w odpowiednim okienku.
+<div class="columns-2">
+
+* Po zainstalowaniu paczki, należy wybrać `File > New File > R Markdown`.
+* W lewym oknie zaznaczamy `From template`.
+* Z listy wyboru wybieramy interesujący nas szablon i nadajemy nazwę pliku w odpowiednim okienku.
+
+```{r out.width=c('340px', '405px'), out.height=c('300px', '300px'), fig.show='hold'}
+knitr::include_graphics('template.png')
+```
+</div>
 
 ---
 
-W katalogu projektu zostanie utworzony Sub-katalog zawierający wszystkie potrzebne pliki. Żeby można było formatkę skąpilować trzeba jednak zmienić 2 rzeczy.
-
----
+W katalogu projektu zostanie utworzony sub-katalog zawierający wszystkie potrzebne pliki. Żeby można było formatkę skompilować trzeba jednak zmienić 2 rzeczy.
 
 - Zmieniamy nazwę pliku, który ma nazwę identyczną z nazwą katalogu na `index.Rmd`
 - `Tools > Project options > Build Tools` tutaj należy zmienić pola:
@@ -150,13 +165,13 @@ knitr::kable(df)
 
 ---
 
-* `knitr::kable()` %>% kableExtra()
+* `knitr::kable()` %>% `kableExtra()`
 
 ```{r echo = T, eval = T}
 library(kableExtra)
 knitr::kable(df, col.names = c('Col1', 'Col2')) %>%
   kable_styling(full_width = T,
-                bootstrap_options = c('striped', 'condensed', 'bordered')) %>%
+                bootstrap_options = c('striped', 'condensed')) %>%
   row_spec(row = 0, bold = T, background = '#f5f6fa') %>%
   row_spec(row = 2, bold = F, background = '#15b0f2', align = "left") %>%
   column_spec(2, width = '20em', color = 'salmon')
@@ -164,20 +179,96 @@ knitr::kable(df, col.names = c('Col1', 'Col2')) %>%
 
 ---
 
-Niby nic trudnego, ale:
+Niby nic trudnego, *ale*:
 
 * `kableExtra` posiada kilka różnic dla *html* i *pdf*, więc przy dużej ilości formatowania tabel, trzeba się posiłkować 
 `if (knitr::is_html_output()) {wersja html} else {wersja pdf}`,
 * użycie tagu `@cytacja` w tabelach nie jest takie proste jakby się mogło wydawać (o tym za chwilę),
 * jeśli nie korzystamy z *default'owych* szablonów, `kableExtra` wymaga edycji pliku `preamble.tex` do poprawnego działania.
 
-## Tricky parts | abstrakt
+## Tricky parts | Abstrakt i strona tytułowa
 
+Żeby dostosować stronę tytułową do naszych potrzeb, niestety trzeba edytować szablony *html* i *tex*. Nie jest to jednak bardzo skomplikowane i typowe problemy są opisane na *Stack Overflow*.
 
+Dla prostego formatowania (np. bez tabeli z łączonymi kolumnami), można w pliku *index.Rmd* użyć nagłówka z atrybutem `{-}` (np. `# Summary {-}`) albo wpisać nasz abstrakt w zmienną `abstract` w części *YAML*.
 
-## Tricky parts | cytacje
+---
 
+Przy skomplikowanych abstraktach z dużą ilością formatowania może okazać się, że jedynym sensownym rozwiązaniem będzie stworzenie osobnych abstraktów dla różnych formatów. Wtedy można np. abstrakt z formatowaniem *html* zostawić w pliku *index.Rmd* a abstrakt dla wersji *pdf* wywołać z *YAML*.
 
+```{yaml echo = T, eval = F}
+abstract: |
+  `r if(knitr:::is_latex_output()) paste(readLines("abstract.md"),
+                                         collapse = '\n  ')`
+```
+```{r echo = T, eval = F}
+`r if (knitr:::is_html_output()) '# Summary {-}'`
+
+{r echo = F, eval = T, results = 'asis'}
+if (knitr::is_html_output()) {
+ cat('<div class="abstract-box"><div class="title-box">Summary of the
+     Express Pest Risk Analysis for <i>',
+     rmarkdown::metadata$pest, '</i></div>')
+}
+```
+
+## Tricky parts | Cytacje
+
+Cytowanie w **RMarkdown** jest bardzo proste, wystarczy użyć taga `@` i identyfikatora pozycji literaturowej (z pliku *BibTeX*). Chyba, że jako format docelowy wybierzemy *pdf*...
+
+---
+
+W **RMarkdown** cytacje generowane są przez **Pandoc** i w samym tekście działa zarówno składnia **RMarkdown** jak i *LaTeX*. Natomiast jeśli tworzymy tabelę przy użyciu pakietów `kable` i `kableExtra` w rzeczywistości pracujemy na tabelach *LaTeX'owych*, w wyniku czego składnia **RMarkdown** nie działa.
+
+---
+
+Rozwiązanie:
+
+Możemy napisać prostą funckję, która będzie dodawała tagi *LaTeX'owe* wokół zmiennej.
+
+```{r eval = F, echo = T}
+formatingCite <- function(x, hyperlink = T) {
+  if (hyperlink) {
+    paste0('\\citeauthor{', x, '}, ', '\\hyperlink{ref-', x, '}',
+           '{\\citeyear{', x, '}}')
+} else {
+    paste0('\\citeauthor{', x, '}, ', '{\\citeyear{', x, '}}')  
+  } 
+}
+```
+
+---
+
+Następnie piszemy również prostą funkcję, która usunie `@` z identyfikatorów i wykona na każdym z nich funkcję `formatingCite()`.
+
+```{r eval = F, echo = T}
+ref_in_table <- function(x, hyperlink = T) {
+  x %>%
+    gsub('@', '', .) %>%
+    strsplit('; ') %>%
+    lapply(formatingCite, hyperlink) %>%
+    lapply(paste, collapse = '; ') %>% 
+    unlist()
+}
+```
+
+---
+
+Na kolumnie zawierającej cytacje używamy funkcji `mutate()` a następnie podmieniamy *puste* referencje `NA`. Należy pamiętać o dodaniu argumentu `escape = F` do funkcji `kable()`.
+
+```{r eval = F, echo = T}
+df <- df %>% mutate(ref = ref_in_table(df$ref, T))
+
+df$ref[df$ref ==
+         '\\citeauthor{}, \\citeyear{}' |
+       df$ref ==
+         '\\citeauthor{}, \\hyperlink{ref-}{\\citeyear{}}'] <- NA
+
+###<b>
+knitr::kable(test_table2, 'latex', escape = F)
+###</b>
+
+```
 
 # Grand Final | AKA Źródła
 

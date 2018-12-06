@@ -1,3 +1,53 @@
 .emphasized {
   font-size: 3.5em;
 }
+
+.bigger {
+  font-size: 1.7em;
+}
+
+slides > slide {
+  font-family: "Roboto";
+}
+
+.prettyprint .com {
+  /* a comment */
+  color: purple;
+  font-style: italic;
+}
+
+.prettyprint .pun,
+.prettyprint .opn,
+.prettyprint .clo {
+  color: white;
+}
+
+.prettyprint .pln {
+  color: darkorange;
+}
+
+.prettyprint {
+  background-color: #1f1f1f;
+}
+
+pre {
+  width: 100%; /* 106%; */
+  left: 0; /* -60px; */
+  padding: 10px 15px 10px 15px; /* 10px 0 10px 60px; */
+}
+
+.gdbar img {
+  width: 115px !important;
+  height: 115px !important;
+  margin-bottom: 10px;
+}
+
+aside.gdbar {
+
+    height: 97px;
+    width: 215px;
+    position: absolute;
+    left: -1px;
+    top: 10px;
+    background: white;
+}
